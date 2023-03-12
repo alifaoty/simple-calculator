@@ -1,10 +1,10 @@
-from tkinter import*
+from tkinter import *
 import math
 from tkinter import messagebox
 
 root = Tk()
 blank_space = " "
-root.title (25 * blank_space + "Simple Calculator")
+root.title (blank_space + "Simple Calculator")
 root.resizable(width =FALSE, height = False,)
 
 coverFrame = Frame (root, pady=2, relief=RIDGE)
@@ -54,9 +54,12 @@ class Calculator():
 
 # Operasi system tombol +, -, *, / dan juga (error handling)
     def valid_function(self):    
+        
         try:
             if self.op == "add":
                 self.total += self.current
+                # round untuk menghilangkan 0.00000
+                self.total = round(self.total,5)
             if self.op == "min":
                 self.total -= self.current
             if self.op == "kali":
@@ -67,8 +70,13 @@ class Calculator():
             self.check_sum = False
             self.display(self.total)
         except ZeroDivisionError:
-            print("aduh error")
-
+            messagebox.showerror('Error', 'Error operation, Please insert another number')
+        except SyntaxError:
+            if len (self.total0) > 0:
+                messagebox.showerror('Error', 'Please Insert Another Number')
+            else:
+                messagebox.showerror('Error', 'Please Insert a number')
+# Operasi system tombol (+ - / x)
     def operation(self, op):
         self.current = float(self.current)
         if self.check_sum:
@@ -98,16 +106,6 @@ class Calculator():
     def all_Clear_Entry(self):
         self.Clear_Entry()
         self.total = 0
-
-    def button_click(self, number):
-        current = self.result.get()
-        self.result.delete(0, END)
-        self.result.insert(0, str(current) + str(number))
-
-    def mathsPM(self):
-        self.result = False
-        self.current = -(float(entDisplay.get()))
-        self.display(self.current)
 
 # Operasi system tombol √
     def squared(self):
@@ -156,7 +154,7 @@ btnMin.grid(row=4, column=3, pady=1)
 btnDiv=Button(MainFrame, width=6, height=2, font=('arial,', 16, 'bold'), text=chr(247), bg="lightgrey", command=lambda:added_value.operation("dev"))
 btnDiv.grid(row=5, column=3, pady=1)
 
-# Membuat Tombol x
+# Membuat Tombol *
 btnkali=Button(MainFrame, width=6, height=2, font=('arial,', 16, 'bold'), text="x", bg="lightgrey", command=lambda:added_value.operation("kali"))
 btnkali.grid(row=6, column=3, pady=1)
 
@@ -164,8 +162,8 @@ btnkali.grid(row=6, column=3, pady=1)
 btnNol=Button(MainFrame, width=6, height=2, font=('arial,', 16, 'bold'), text="0", bg="lightgrey", command=lambda:added_value.numberEnter("0"))
 btnNol.grid(row=6, column=1, pady=1)
 
-# Membuat Tombol .
-btndot=Button(MainFrame, width=6, height=2, font=('arial,', 16, 'bold'), text=".", bg="lightgrey", command=lambda:added_value.numberEnter("."))
+# Membuat Tombol ,
+btndot=Button(MainFrame, width=6, height=2, font=('arial,', 16, 'bold'), text=",", bg="lightgrey", command=lambda:added_value.numberEnter("."))
 btndot.grid(row=6, column=2, pady=1)
 
 # Membuat Tombol √
