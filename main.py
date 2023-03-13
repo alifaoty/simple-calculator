@@ -53,8 +53,7 @@ class Calculator():
             self.total = float(entDisplay.get())
 
 # Operasi system tombol +, -, *, / dan juga (error handling)
-    def valid_function(self):    
-        
+    def valid_function(self):         
         try:
             if self.op == "add":
                 self.total += self.current
@@ -76,6 +75,7 @@ class Calculator():
                 messagebox.showerror('Error', 'Please Insert Another Number')
             else:
                 messagebox.showerror('Error', 'Please Insert a number')
+                
 # Operasi system tombol (+ - / x)
     def operation(self, op):
         self.current = float(self.current)
